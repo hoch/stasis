@@ -1,6 +1,6 @@
 # Stasis
+
 Light-weight and simple static site generator for Node
----
 
 **NOTE** This is work-in-progress! Use at your own risk!
 
@@ -16,7 +16,6 @@ So far it has been good enough for me. So I thought I would share!
 
 
 ## Usage
----
 
 ### Installation
     $> npm install -g stasis    # install stasis
@@ -73,7 +72,6 @@ The HTML snippet above will display an image file from `/out/assets`, which is d
 
 
 ## Directory Structure
----
 
         .
         |
