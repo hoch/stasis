@@ -11,6 +11,7 @@ __Stasis__ is a very simple and lightweight static site generator written in Nod
 - Built-in SASS support: node-sass(libsass)
 - Built-in Dust.js template support
 - Dependency management: npm/Bower
+- Task management: Grunt
 
 So far it has been good enough for me. So I thought I would share!
 
