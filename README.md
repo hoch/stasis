@@ -1,5 +1,5 @@
 # Stasis
---------
+---
 Light-weight and simple static site generator for Node
 
 __Stasis__ is a very simple and lightweight static site generator written in Node.js. The project simply started to minimize _manual labor_ on my own web site. I am aware that there is an army of static site generators for Node and some of them are useful and efficient, but none of them really worked for me. __Stasis__ offers features like:
@@ -14,7 +14,7 @@ So far it has been good enough for me. So I thought I would share!
 
 
 ## Usage
---------
+---
     
 ### Installation
     $> npm install -g stasis    # install stasis
@@ -70,8 +70,8 @@ Stage also provides some custom tokens in the markdown source file that can be t
 The HTML snippet above will display an image file from `/out/assets`, which is duplicated from `/src/assets`.
 
 
-## Directory Structure (scaffolding by init)
---------------------------------------------
+## Directory Structure
+---
 
         .
         |
