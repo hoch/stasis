@@ -1,0 +1,30 @@
+{
+  "name": "stasis",
+  "version": "0.0.1",
+  "description": "Light-weight static site generator for Node.js",
+  "main": "lib/main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hoch/stasis.git"
+  },
+  "keywords": [
+    "static",
+    "site",
+    "generator",
+    "blog",
+    "foundation",
+    "sass"
+  ],
+  "author": "Hongchan Choi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hoch/stasis/issues"
+  },
+  "homepage": "https://github.com/hoch/stasis"
+}
