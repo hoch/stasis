@@ -6,9 +6,11 @@ Light-weight static site generator for Node
 
 > NOTE: This is work-in-progress! Use at your own risk!
 
-__Stasis__ is a super simple and lightweight static site generator written in Node.js. The project simply started to minimize _manual labor_ on my own web site. I am aware that there is an army of static site generators for Node and some of them are useful and efficient, but none of them really worked for me. __Stasis__ offers features like:
+__Stasis__ is a super simple and lightweight static site generator written in Node.js. The project simply started to minimize _manual labor_ on my own web site. I am aware that there is an army of static site generators for Node and some of them are useful and efficient, but none of them really worked for me.
 
-- Markdown-in/HTML-out with [Makred](https://github.com/chjj/marked)
+__Stasis__ offers features like:
+
+- Markdown-in/HTML-out with [Marked](https://github.com/chjj/marked)
 - [Foundation 5](http://foundation.zurb.com/)
 - [SASS](http://sass-lang.com/) with [node-sass](https://github.com/sass/node-sass)
 - [Dust.js](http://linkedin.github.io/dustjs/) template
@@ -16,7 +18,7 @@ __Stasis__ is a super simple and lightweight static site generator written in No
 - [Grunt](http://gruntjs.com/)
 - [Polymer](http://www.polymer-project.org/) elements (experimental)
 
-So far it has been good enough for me. So I thought I would share!
+I just grabbed the best thing in the web world to create __Stasis__. So far it has been good enough for me. So I thought I would share!
 
 
 ## Usage
