@@ -156,23 +156,12 @@ describe('Stasis Core: Public Methods', function () {
   describe('read(source_path)', function () {
     it('should read markdown file to a doc object.', function () {
       var doc = stasis.read('test/src/test.md');
-      expect(doc).deep.equal({
-        "body": "<p>TEST BODY</p>\n",
-        "date": {
-          "ago": "38 years ago",
-          "mdy": "06.26.1976",
-          "unix": "204688800"
-        },
-        "doc_id": "test",
-        "language": "en",
-        "source": "test/src/test.md",
-        "tags": [
-          "birthday"
-        ],
-        "template": "test_template",
-        "title": "Test Document: Hello World",
-        "fvec": {}
-      });
+      expect(doc.body).to.equal("<p>TEST BODY</p>\n");
+      expect(doc.date.ago).to.equal("38 years ago");
+      expect(doc.doc_id).to.equal("test");
+      expect(doc.source).to.equal("test/src/test.md");
+      expect(doc.template).to.equal("test_template");
+      expect(doc.title).to.equal("Test Document: Hello Stasis!");
       // clean doc cache for next test
       stasis._cleanDocCache();
     });
