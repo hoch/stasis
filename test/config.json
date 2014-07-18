@@ -1,0 +1,25 @@
+{
+  "path": {
+    "out": "test/out",
+    "src": "test/src",
+    "templates": "test/templates"
+  },
+  "siteinfo": {
+    "version": "0.0.1",
+    "title": "Stasis Test Site",
+    "author": "Stasis Author",
+    "url": "https://www.yoursite.com",
+    "meta": {
+      "keywords": "keywords, here",
+      "description": "descriptions, here",
+      "generator": "Stasis"
+    },
+    "lastUpdate": "2014-06-26 19:00"
+  },
+  "sitemap": {
+    "index.html": "home",
+    "page-1": "page 1",
+    "page-2": "page 2",
+    "posts": "blog"
+  }
+}

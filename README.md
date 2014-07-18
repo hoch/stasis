@@ -2,7 +2,7 @@
 
 <img src="https://travis-ci.org/hoch/stasis.svg?branch=master" />
 
-Light-weight static site generator for Node
+**Light-weight static site generator for Node**
 
 > NOTE: This is work-in-progress! Use at your own risk!
 

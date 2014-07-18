@@ -1,0 +1,10 @@
+<h1>Test Template</h1>
+
+<ul>
+  <li>{title}</li>
+  <li>{date.mdy}</li>
+  <li>{tags}</li>
+</ul>
+<span>{doc_id}</span>
+
+{body|s}
