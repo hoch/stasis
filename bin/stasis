@@ -1,8 +1,40 @@
 #!/usr/bin/env node
 
-var stasis = require('../lib/main');
+// var stasis = require('../lib/main');
 
-// var args = process.argv.slice(2);
+var args = process.argv.slice(2);
+
+switch (args[0]) {
+  case 'build':
+    console.log('build');
+    break;
+  default:
+    console.log('hey');
+    break;
+}
+
 
 // stasis.readConfig(args[0])
-stasis.build();
+// stasis.build();
+
+/**
+ * build process
+ */
+
+// function build() {
+//   // reading documents
+//   console.log(">>> Reading doucments...".post);
+//   var pages = Core.rake(CONFIG.path.src + '/pages/*.md');
+//   var posts = Core.rake(CONFIG.path.src + '/posts/**/*.md');
+//   // loading templates
+//   console.log(">>> Loading templates...".post);
+//   Core.loadTemplates(CONFIG.path.templates);
+//   // render pages, posts, blog index
+//   console.log(">>> Rendering pages...".post);
+//   Core.render(pages, CONFIG.path.out);
+//   console.log(">>> Rendering blog posts and index...".post);
+//   Core.render(posts, CONFIG.path.out + '/posts');
+//   Core.renderIndex(posts, CONFIG.path.out + '/posts', 'blogindex');
+// }
+
+// build();
