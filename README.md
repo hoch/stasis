@@ -2,7 +2,7 @@
 
 <img src="https://travis-ci.org/hoch/stasis.svg?branch=master" />
 
-**Opinionated, light-weight static site generator for Node.js**
+#### **Opinionated, light-weight static site generator for Node.js**
 
 __Stasis__ is a super simple and lightweight static site generator written in Node.js. The project simply started to minimize _manual labor_ on my own web site. I am aware that there is an army of static site generators for Node and some of them are useful and efficient, but none of them really worked for me.
 
@@ -86,4 +86,8 @@ I simply put the best things in the web world into create __Stasis__ and the boi
 
 ## License
 
-MIT License. Copyright (c) 2014 Hongchan Choi
+MIT License. Copyright (c) 2014 [Hongchan Choi](https://ccrma.stanford.edu/~hongchan)
+
+## Change Log
+
+(0.0.7) Fixed `@root` keyword substitution.
