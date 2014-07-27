@@ -1,18 +1,32 @@
+/**
+ * Stasis: mocha+chai test
+ * @version     0.0.6
+ */
+
+// dependencies
 var chai    = require('chai'),
     expect  = chai.expect;
 
-var glob    = require('glob'),
-    rimraf  = require('rimraf');
+var fs      = require('fs'),
+    path    = require('path'),
+    glob    = require('glob'),
+    rimraf  = require('rimraf'),
+    mkdirp  = require('mkdirp');
 
+// Stasis instance
 var Stasis  = require('../lib/main');
 
 
-// clean up output path and initialize Stasis
+/**
+ * Initializing: obliterate-recreate output path and boot up Stasis
+ */
+
 describe('Initializing', function () {
 
   it('should clean up output path first.', function () {
-    rimraf.sync('test/out/');
-    expect(glob.sync('test/out')).deep.equal([]);
+    rimraf.sync('test/out');
+    mkdirp.sync('test/out');
+    expect(glob.sync('test/out')).deep.equal(['test/out']);
   });
 
   it('should load config and template files.', function () {
@@ -24,7 +38,10 @@ describe('Initializing', function () {
 });
 
 
-// Utilities
+/**
+ * Stasis Utilities
+ */
+
 describe('Utilities', function () {
 
   describe('calculateFeature(source_string)', function () {
@@ -36,15 +53,27 @@ describe('Utilities', function () {
     });
   });
 
-  describe('filterDocument(doc, options)', function () {
-    it('filter document by options. (i.e. tag)', function () {
+  describe('checkDate(doc, startDate, endDate)', function () {
+    it('check document date in range', function () {
+      // this is 03.06.2014
+      var doc = { date: { unix: '1394092800' }} ;
+      var d1 = new Date('2014 03 05'),
+          d2 = new Date('2014 03 07');
+      expect(Stasis.Util.checkDate(doc, d1)).to.equal(true);
+      expect(Stasis.Util.checkDate(doc, d2)).to.equal(false);
+      expect(Stasis.Util.checkDate(doc, d1, d2)).to.equal(true);
+    });
+  });
+
+  describe('checkTags(doc, tags)', function () {
+    it('check document tags', function () {
       var doc = { tags: ['tag1', 'tag2'] };
-      var opt1 = { tags: ['tag1'] },
-          opt2 = { tags: ['tag2'] },
-          opt3 = { tags: ['tag3'] };
-      expect(Stasis.Util.filterDocument(doc, opt1)).to.equal(true);
-      expect(Stasis.Util.filterDocument(doc, opt2)).to.equal(true);
-      expect(Stasis.Util.filterDocument(doc, opt3)).to.equal(false);
+      var tags1 = ['tag1'],
+          tags2 = ['tag2'],
+          tags3 = ['tag3'];
+      expect(Stasis.Util.checkTags(doc, tags1)).to.equal(true);
+      expect(Stasis.Util.checkTags(doc, tags2)).to.equal(true);
+      expect(Stasis.Util.checkTags(doc, tags3)).to.equal(false);
     });
   });
 
@@ -56,6 +85,8 @@ describe('Utilities', function () {
     });
   });
 
+  // NOTE: renderDocument test is down there...
+
 });
 
 
@@ -65,15 +96,15 @@ describe('Utilities', function () {
 
 describe('Core', function () {
 
-  describe('_buildDocument(source_path)', function () {
+  describe('_buildDocument(source_path, target_path)', function () {
     it('should build markdown file to a doc object.', function () {
-      var doc = Stasis._buildDocument('test/src/test.md');
-      expect(doc.body).to.equal("<p>TEST BODY</p>\n");
-      expect(doc.date.ago).to.equal("38 years ago");
-      expect(doc.doc_id).to.equal("test");
-      expect(doc.source).to.equal("test/src/test.md");
-      expect(doc.template).to.equal("test_template");
-      expect(doc.title).to.equal("Test Document: Hello Stasis!");
+      var doc = Stasis._buildDocument('test/src/pages/index.md', 'test/out');
+      expect(doc.date.ago).to.equal('38 years ago');
+      expect(doc.id).to.equal('index');
+      expect(doc.path.source).to.equal('test/src/pages/index.md');
+      expect(doc.path.dir).to.equal('test/out');
+      expect(doc.template).to.equal('test_index');
+      expect(doc.title).to.equal('Hello Stasis!');
     });
   });
 
@@ -94,65 +125,26 @@ describe('Core', function () {
 
   describe('_getDocLocation(doc)', function () {
     it('should return document location based on sitemap.', function () {
-        var doc1 = Stasis._buildDocument('test/src/page-1.md'),
-            doc2 = Stasis._buildDocument('test/src/posts/test-post-1.md');
-        doc1.path = Stasis._resolvePath(doc1, 'test/out');
-        doc2.path = Stasis._resolvePath(doc2, 'test/out/posts');
+        var doc1 = { path: { self: 'test/out/page-1/index.html' }},
+            doc2 = { path: { self: 'test/out/posts/test-post-1/index.html' }};
         expect(Stasis._getDocumentLocation(doc1)).to.equal('page 1');
         expect(Stasis._getDocumentLocation(doc2)).to.equal('blog');
       }
     );
   });
 
-  describe('_resolvePath(doc, target_path)', function () {
+  describe('_resolvePath(source_path, target_path)', function () {
     it('should return correct paths for rendering.', function () {
-      var doc = { source: 'test/src/document.md' };
-      var path = Stasis._resolvePath(doc, 'test/out');
+      var path = Stasis._resolvePath('test/src/document.md', 'test/out');
       expect(path).deep.equal({
-        "assets": "../assets",
+        "source": "test/src/document.md",
+        "dir": "test/out/document",
         "permalink": "https://www.yoursite.com/test/out/document",
         "root": "../",
         "self": "test/out/document/index.html"
       });
     });
   });
-
-  // describe('_filterDoc(doc, options)', function () {
-  //   // filter case 1
-  //   it('should return flag after checking dates.', function () {
-  //     var post = stasis.read('test/src/posts/test-post-1.md');
-  //     var flag = stasis._filterDoc(post, {
-  //       startDate: '2013-12-31 00:00',
-  //       endDate: '2014-01-02 00:00'
-  //     });
-  //     expect(flag).to.equal(true);
-  //   });
-  //   // filter case 2
-  //   it('should return flag after checking tags.', function () {
-  //     var post1 = stasis.read('test/src/posts/test-post-1.md');
-  //     var flag1 = stasis._filterDoc(post1, {
-  //       tags: ['tag1']
-  //     });
-  //     expect(flag1).to.equal(true);
-  //     var post2 = stasis.read('test/src/posts/test-post-2.md');
-  //     var flag2 = stasis._filterDoc(post2, {
-  //       tags: ['tag1']
-  //     });
-  //     expect(flag2).to.equal(false);
-  //   });
-  //   // filter case 3
-  //   it('should return flag after checking both dates and tags.', function () {
-  //     var post = stasis.read('test/src/posts/test-post-3.md');
-  //     var flag = stasis._filterDoc(post, {
-  //       startDate: '2014-01-02 00:00',
-  //       endDate: '2014-01-04 00:00',
-  //       tags: ['tag3']
-  //     });
-  //     expect(flag).to.equal(true);
-  //     // clean doc cache for next test
-  //     stasis._cleanDocCache();
-  //   });
-  // });
 
 });
 
@@ -163,46 +155,69 @@ describe('Core', function () {
 
 describe('Stasis Core: Public Methods', function () {
 
-  describe('collectDocuments(glob_pattern)', function () {
-    it('should read all the matching markdown files.', function () {
+  describe('createCollection(glob_pattern, target_path)', function () {
+    it('should read matching files and create a collection.', function () {
       Stasis.resetDocumentID();
-      var posts = Stasis.collectDocuments('test/src/posts/**/*.md');
-      expect(posts[0]).to.have.property('title', 'Test Post 1');
-      expect(posts[1]).to.have.property('body', '<p>TEST POST #2</p>\n');
-      expect(posts[2]).to.have.property('doc_id', 'test-post-3');
+      // create collections
+      var pages = Stasis.createCollection('test/src/pages/*.md', 'test/out'),
+          posts = Stasis.createCollection('test/src/posts/**/*.md', 'test/out/posts');
+      // assert
+      expect(pages[0]).to.have.property('id', 'index');
+      expect(pages[1]).to.have.property('id', 'page-1');
+      expect(pages[2]).to.have.property('id', 'page-2');
+      expect(posts[0]).to.have.property('id', 'test-post-1');
+      expect(posts[1]).to.have.property('id', 'test-post-2');
+      expect(posts[2]).to.have.property('id', 'test-post-3');
     });
   });
 
-  describe('renderDocuments(docs, target_path, options)', function () {
+  describe('renderCollection(docs)', function () {
     it('should render the document collection at target path.', function () {
       Stasis.resetDocumentID();
-      // collect and render
-      var posts = Stasis.collectDocuments('test/src/posts/**/*.md');
-      Stasis.renderDocuments(posts, 'test/out/posts/', {});
+      // create collections
+      var pages = Stasis.createCollection('test/src/pages/*.md', 'test/out'),
+          posts = Stasis.createCollection('test/src/posts/**/*.md', 'test/out/posts');
+      // render
+      Stasis.renderCollection(pages);
+      Stasis.renderCollection(posts);
       // get result html file paths
-      var output = glob.sync('test/out/posts/**/index.html');
+      var rendered = glob.sync('test/out/**/index.html');
       // assert
-      expect(output).to.include('test/out/posts/test-post-3/index.html');
-      expect(output).to.include('test/out/posts/test-post-2/index.html');
-      expect(output).to.include('test/out/posts/test-post-1/index.html');
+      expect(rendered).to.include('test/out/index.html');
+      expect(rendered).to.include('test/out/page-1/index.html');
+      expect(rendered).to.include('test/out/page-2/index.html');
+      expect(rendered).to.include('test/out/posts/test-post-3/index.html');
+      expect(rendered).to.include('test/out/posts/test-post-2/index.html');
+      expect(rendered).to.include('test/out/posts/test-post-1/index.html');
     });
   });
 
-  // describe('renderIndex(docs, target_path, template_name)', function () {
-  //   it('should render index page for document collection at target path.',
-  //     function () {
-  //       // rake and render
-  //       var posts = stasis.rake('test/src/posts/**/*.md');
-  //       stasis.render(posts, 'test/out/posts/');
-  //       // 'test_postlist' is loaded above. (NOTE: dustjs is global)
-  //       stasis.renderIndex(posts, 'test/out/posts', 'test_postlist');
-  //       // test produced list page
-  //       var index = glob.sync('test/out/posts/*.html');
-  //       expect(index).to.include('test/out/posts/index.html');
-  //       // clean doc cache for next test
-  //       stasis._cleanDocCache();
-  //     }
-  //   );
-  // });
+  describe('generateCollectionData(docs, target_path, filterFn)', function () {
+    it('should render the document collection data at target path.', function () {
+      Stasis.resetDocumentID();
+      // create collection
+      var posts = Stasis.createCollection('test/src/posts/**/*.md', 'test/out/posts');
+      // generate data json file
+      Stasis.generateCollectionData(
+        posts,
+        'test/out/posts/data.json',
+        function (doc) {
+          return {
+            title: doc.title,
+            date: doc.date.mdy,
+            tags: doc.tags,
+            language: doc.language,
+            path: doc.path.dir
+          };
+        }
+      );
+      // read it back
+      var data = JSON.parse(fs.readFileSync('test/out/posts/data.json', 'utf8'));
+      // assert
+      expect(data[0]).to.have.property('path', 'test/out/posts/test-post-1');
+      expect(data[1]).to.have.property('path', 'test/out/posts/test-post-2');
+      expect(data[2]).to.have.property('path', 'test/out/posts/test-post-3');
+    });
+  });
 
 });
