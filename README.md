@@ -14,29 +14,44 @@ __Stasis__ is a part of a boilerplate that I created, which is a collection of e
 - [Dust.js](http://linkedin.github.io/dustjs/) templating
 - [Polymer](http://www.polymer-project.org/) elements
 
-I simply put the best things in the web world into create __Stasis__ and the boilerplate. So far it has been good enough for me. So I thought I would share!
+I simply put the best things in the web world into create __Stasis__ and the boilerplate. _(This is why I refer this project as opinionated.)_ So far it has been good enough for me. So I thought I would share!
 
 
 ### Prerequisites
-- GNU Make
-- Git
+
+- GNU Make and Git
 - Node.js and Bower
+
+On OS X and Linux systems, GNU Make and Git should be already installed. To install [Node.js](http://nodejs.org/) and [Bower](http://bower.io/), visit the project pages.
 
 
 ### Installation
-    > git clone http://www.github.com/hoch/stasis-bp MY_WEB_SITE
-    > cd my_web_site
-    > make
+
+3 commands to get up and running. The last `make` command will install all npm and Bower dependencies.
+
+~~~bash
+git clone http://www.github.com/hoch/stasis-bp [MY_WEB_SITE]
+cd [MY_WEB_SITE]
+make
+~~~
 
 
 ### Usage
-    > grunt                  # default: build site 
-    > grunt new              # create article template with interactive options
-    > grunt preview          # starts preview server at localhost:8080
-    > grunt publish          # publishes generated site to specified host
+
+The boilerplate uses Grunt for copying files, CSS compilation and publishing. __Stasis__ only deals with parsing and generating HTML documents. It allows you to modify the work-flow without learning new things. Just stick with your Grunt skill.
+
+~~~bash
+grunt                  # default: build site 
+grunt new              # create article template with interactive options
+grunt preview          # starts preview server at localhost:8080
+grunt publish          # publishes generated site to specified host
+~~~
 
 
 ### Directory Structure: Source and Output
+
+The below tree graph shows how the source documents are translated into the output. The rules are super-simple; there is no complex routing system. `pages` are for static pages and `posts` are for blog posts.
+
         $SRC                            $OUT
         |                               |
         +- pages/                       |
@@ -61,7 +76,29 @@ I simply put the best things in the web world into create __Stasis__ and the boi
             +- ...
 
 
+### Markdown/YAML Front-Matter Source
+
+__Stasis__ uses Markdown and YAML front-matter format as source document. Internally, __Stasis__ uses [Marked](https://github.com/chjj/marked) for Markdown translating and [Highlight.js](http://highlightjs.org/) for code syntax highlighting.
+
+~~~markdown
+---
+title: "Markdown is easy."
+date: 2014-06-01 00:00
+tags: ["thoughts", "research"]
+template: "post"
+language: "en"
+draft: true
+---
+
+Your text goes here.
+
+~~~
+
+
 ### Document Object
+
+This is how __Stasis__ engine builds a document object from a source document. All the data field (properties) can be freely used in the template.
+
     {
         id: "hello-world",                  // document id
         language: "ko",                     // language: [en, ko]
@@ -84,10 +121,20 @@ I simply put the best things in the web world into create __Stasis__ and the boi
         }
     }
 
+
 ## License
 
 MIT License. Copyright (c) 2014 [Hongchan Choi](https://ccrma.stanford.edu/~hongchan)
 
+
 ## Change Log
 
-(0.0.7) Fixed `@root` keyword substitution.
+(0.0.7)
+- Fixed `@root` keyword substitution.
+- More details added to README
+
+(0.0.6) 
+- Boilerplate released.
+
+(0.0.3) 
+- Initial commit.
