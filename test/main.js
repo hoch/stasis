@@ -1,6 +1,5 @@
 /**
- * Stasis: mocha+chai test
- * @version     0.0.6
+ * Mocha + Chai test for Stasis
  */
 
 // dependencies
@@ -23,7 +22,7 @@ var Stasis  = require('../lib/main');
 
 describe('Initializing', function () {
 
-  it('should clean up output path first.', function () {
+  it('should clean up output path `test/out` first.', function () {
     rimraf.sync('test/out');
     mkdirp.sync('test/out');
     expect(glob.sync('test/out')).deep.equal(['test/out']);

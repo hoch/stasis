@@ -14,15 +14,15 @@ __Stasis__ is a part of a boilerplate that I created, which is a collection of e
 - [Dust.js](http://linkedin.github.io/dustjs/) templating
 - [Polymer](http://www.polymer-project.org/) elements
 
-I simply put the best things in the web world into create __Stasis__ and the boilerplate. _(This is why I refer this project as opinionated.)_ So far it has been good enough for me. So I thought I would share!
+I simply put the best things in the web world into create __Stasis__ and the boilerplate. _(This is why I refer this project as opinionated.)_ [So far it has been good enough for me.](http://hoch.io) So I thought I would share!
 
 
 ### Prerequisites
 
 - GNU Make and Git
-- Node.js and Bower
+- Node.js, Bower and Grunt
 
-On OS X and Linux systems, GNU Make and Git should be already installed. To install [Node.js](http://nodejs.org/) and [Bower](http://bower.io/), visit the project pages.
+On OS X and Linux systems, GNU Make and Git should be already installed. To install [Node.js](http://nodejs.org/), [Bower](http://bower.io/) and [Grunt](http://gruntjs.com/), visit the project pages.
 
 
 ### Installation
@@ -30,8 +30,8 @@ On OS X and Linux systems, GNU Make and Git should be already installed. To inst
 3 commands to get up and running. The last `make` command will install all npm and Bower dependencies.
 
 ~~~bash
-git clone http://www.github.com/hoch/stasis-bp [MY_WEB_SITE]
-cd [MY_WEB_SITE]
+git clone http://www.github.com/hoch/stasis-bp MY_WEB_SITE
+cd MY_WEB_SITE
 make
 ~~~
 
@@ -40,10 +40,13 @@ make
 
 The boilerplate uses Grunt for copying files, CSS compilation and publishing. __Stasis__ only deals with parsing and generating HTML documents. It allows you to modify the work-flow without learning new things. Just stick with your Grunt skill.
 
+Note that Grunt commands are a part of the boilerplate, not Stasis engine itself. Use the following command in the directory created above.
+
 ~~~bash
+cd MY_WEB_SITE
 grunt                  # default: build site 
 grunt new              # create article template with interactive options
-grunt preview          # starts preview server at localhost:8080
+grunt serve            # starts preview server at localhost:8000 and watch
 grunt publish          # publishes generated site to specified host
 ~~~
 
@@ -122,12 +125,16 @@ This is how __Stasis__ engine builds a document object from a source document. A
     }
 
 
-## License
+## License and Contact
 
 MIT License. Copyright (c) 2014 [Hongchan Choi](https://ccrma.stanford.edu/~hongchan)
 
 
 ## Change Log
+
+(0.0.8)
+- NPM packages pruned.
+- Boilerplate updated.
 
 (0.0.7)
 - Fixed `@root` keyword substitution.
