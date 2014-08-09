@@ -22,7 +22,8 @@ var Stasis  = require('../lib/main');
 
 describe('Initializing', function () {
 
-  it('should clean up output path `test/out` first.', function () {
+  it('should clean up several path first.', function () {
+    rimraf.sync('test/src/drafts');
     rimraf.sync('test/out');
     mkdirp.sync('test/out');
     expect(glob.sync('test/out')).deep.equal(['test/out']);
@@ -44,7 +45,7 @@ describe('Initializing', function () {
 describe('Utilities', function () {
 
   describe('calculateFeature(source_string)', function () {
-    it('calculate feature vector from source string.', function () {
+    it('calculates feature vector from source string.', function () {
       var srcstr1 = 'The sun in the sky is bright. We can see the shining sun.';
       var srcstr2 = 'Twinkle, twinkle, little star, How I wonder what you are.';
       expect(Stasis.Util.calculateFeature(srcstr1)).deep.equal({ 'sun': 2 });
@@ -53,7 +54,7 @@ describe('Utilities', function () {
   });
 
   describe('checkDate(doc, startDate, endDate)', function () {
-    it('check document date in range', function () {
+    it('checks document date in range', function () {
       // this is 03.06.2014
       var doc = { date: { unix: '1394092800' }} ;
       var d1 = new Date('2014 03 05'),
@@ -65,7 +66,7 @@ describe('Utilities', function () {
   });
 
   describe('checkTags(doc, tags)', function () {
-    it('check document tags', function () {
+    it('checks document tags', function () {
       var doc = { tags: ['tag1', 'tag2'] };
       var tags1 = ['tag1'],
           tags2 = ['tag2'],
@@ -73,6 +74,15 @@ describe('Utilities', function () {
       expect(Stasis.Util.checkTags(doc, tags1)).to.equal(true);
       expect(Stasis.Util.checkTags(doc, tags2)).to.equal(true);
       expect(Stasis.Util.checkTags(doc, tags3)).to.equal(false);
+    });
+  });
+
+  describe('extractTags(str)', function () {
+    it('extract tags from a string', function () {
+      var str1 = '#hEy #Hoe #hEE',
+          str2 = '#Hello@!& #stasis is cool';
+      expect(Stasis.Util.extractTags(str1)).deep.equal(['hey', 'hoe', 'hee']);
+      expect(Stasis.Util.extractTags(str2)).deep.equal(['hello', 'stasis is cool']);
     });
   });
 
@@ -104,6 +114,18 @@ describe('Core', function () {
       expect(doc.path.dir).to.equal('test/out');
       expect(doc.template).to.equal('test_index');
       expect(doc.title).to.equal('Hello Stasis!');
+    });
+  });
+
+  describe('_createNewContent(answers)', function () {
+    it('should create a new content from query answers.', function () {
+      var answers = {
+        title: 'This is The Test Page!!',
+        type: 'page',
+        tags: '#page #test #static!!'
+      };
+      var content = Stasis._createNewContent(answers);
+      expect(fs.existsSync('test/src/drafts/this-is-the-test-page.md')).to.equal(true);
     });
   });
 
@@ -143,6 +165,15 @@ describe('Core', function () {
         "self": "test/out/document/index.html"
       });
     });
+  });
+
+  describe('_validateNewContent(title)', function () {
+    it('validates new content title with respect to existing contents.',
+      function () {
+        expect(Stasis._validateNewContent('Test Post 1')).to.equal(false);
+        expect(Stasis._validateNewContent('hello world!')).to.equal(true);
+      }
+    );
   });
 
 });
