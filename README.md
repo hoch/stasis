@@ -45,7 +45,7 @@ Note that Grunt commands are a part of the boilerplate, not Stasis engine itself
 ~~~bash
 cd MY_WEB_SITE
 grunt                  # default: build site 
-grunt new              # create article template with interactive options
+grunt new              # create content template with interactive options
 grunt serve            # starts preview server at localhost:8000 and watch
 grunt publish          # publishes generated site to specified host
 ~~~
@@ -131,6 +131,9 @@ MIT License. Copyright (c) 2014 [Hongchan Choi](https://ccrma.stanford.edu/~hong
 
 
 ## Change Log
+
+(0.0.9)
+- Interactive prompts for content creation added.
 
 (0.0.8)
 - NPM packages pruned.
