@@ -1,6 +1,6 @@
 {
   "name": "stasis",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Opinionated, light-weight static site generator for Node.js",
   "keywords": [
     "static",

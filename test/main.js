@@ -77,6 +77,17 @@ describe('Utilities', function () {
     });
   });
 
+  describe('sortCollection(doc)', function () {
+    it('sorts collection object in time-reverse order', function () {
+      var docs = [
+        { title: 'a', date: { unix: 0 } },
+        { title: 'b', date: { unix: 1 } }
+      ];
+      Stasis.Util.sortCollection(docs);
+      expect(docs[0].title).to.equal('b');
+    });
+  });
+
   describe('extractTags(str)', function () {
     it('extract tags from a string', function () {
       var str1 = '#hEy #Hoe #hEE',
@@ -244,9 +255,9 @@ describe('Stasis Core: Public Methods', function () {
       // read it back
       var data = JSON.parse(fs.readFileSync('test/out/posts/data.json', 'utf8'));
       // assert
-      expect(data[0]).to.have.property('path', 'test/out/posts/test-post-1');
+      expect(data[0]).to.have.property('path', 'test/out/posts/test-post-3');
       expect(data[1]).to.have.property('path', 'test/out/posts/test-post-2');
-      expect(data[2]).to.have.property('path', 'test/out/posts/test-post-3');
+      expect(data[2]).to.have.property('path', 'test/out/posts/test-post-1');
     });
   });
 
