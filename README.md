@@ -132,6 +132,9 @@ MIT License. Copyright (c) 2014 [Hongchan Choi](https://ccrma.stanford.edu/~hong
 
 ## Change Log
 
+(0.0.10, 0.0.11)
+- Dustjs conflict solved.
+
 (0.0.9)
 - Interactive prompts for content creation added.
 
