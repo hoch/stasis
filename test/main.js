@@ -119,7 +119,6 @@ describe('Core', function () {
   describe('_buildDocument(source_path, target_path)', function () {
     it('should build markdown file to a doc object.', function () {
       var doc = Stasis._buildDocument('test/src/pages/index.md', 'test/out');
-      expect(doc.date.ago).to.equal('38 years ago');
       expect(doc.id).to.equal('index');
       expect(doc.path.source).to.equal('test/src/pages/index.md');
       expect(doc.path.dir).to.equal('test/out');

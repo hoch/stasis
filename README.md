@@ -132,7 +132,11 @@ MIT License. Copyright (c) 2014 [Hongchan Choi](https://ccrma.stanford.edu/~hong
 
 ## Change Log
 
-(0.0.10, 0.0.11)
+(0.0.12)
+- Dependencies updated to the latest version.
+- Boilerplate updated.
+
+(0.0.10), (0.0.11)
 - Dustjs conflict solved.
 
 (0.0.9)

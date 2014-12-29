@@ -5,7 +5,7 @@
     "templates": "test/templates"
   },
   "siteinfo": {
-    "version": "0.0.1",
+    "version": "0.0.2",
     "title": "Stasis Test Site",
     "author": "Stasis Author",
     "url": "https://www.yoursite.com",
