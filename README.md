@@ -2,6 +2,8 @@
 
 <img src="https://travis-ci.org/hoch/stasis.svg?branch=master" />
 
+## This package is NOT being maintained any longer.
+
 #### **Opinionated, light-weight static site generator for Node.js**
 
 __Stasis__ is a super simple and lightweight static site generator written in Node.js. The project simply started to minimize _manual labor_ on my own web site. I am aware that there is an army of static site generators for Node and some of them are useful and efficient, but none of them really worked for me.
